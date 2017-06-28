@@ -8,11 +8,11 @@ import scala.util.Try
 object TwitterConfig {
 
   lazy val conf = new ConfigurationBuilder()
-  conf.setDebugEnabled(true)
-  conf.setOAuthConsumerKey("")
-  conf.setOAuthConsumerSecret("")
-  conf.setOAuthAccessToken("")
-  conf.setOAuthAccessTokenSecret("")
+  conf.setDebugEnabled(AppProperties.getTwitterDebug)
+  conf.setOAuthConsumerKey(AppProperties.getTwitterOauthConsumerKey)
+  conf.setOAuthConsumerSecret(AppProperties.getTwitterOauthConsumerSecret)
+  conf.setOAuthAccessToken(AppProperties.getTwitterOauthAccessToken)
+  conf.setOAuthAccessTokenSecret(AppProperties.getTwitterOauthAccessTokenSecret)
 
   def getAuthorizationFactoryInstance: Option[Authorization] =
     Try(AuthorizationFactory.getInstance(conf.build())).toOption

@@ -7,9 +7,6 @@ import org.apache.spark.SparkConf
 import org.apache.spark.streaming.twitter.TwitterUtils
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 
-/**
-  * Created by rafaelgarrote on 27/6/17.
-  */
 object Main {
 
   def main(args: Array[String]): Unit = {
@@ -27,5 +24,6 @@ object Main {
 
     ssc.start()
     ssc.awaitTermination()
+
   }
 }
