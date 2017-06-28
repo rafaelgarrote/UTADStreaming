@@ -1,7 +1,7 @@
 package com.rafaelgarrote.utad.twitterstreaming
 
 import com.rafaelgarrote.utad.twitterstreaming.conf.TwitterConfig
-import com.rafaelgarrote.utad.twitterstreaming.sentimentanalysis.DandelionProvider
+import com.rafaelgarrote.utad.twitterstreaming.sentimentanalysis.dandelion.DandelionProvider
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.SparkConf
 import org.apache.spark.streaming.twitter.TwitterUtils
@@ -20,7 +20,7 @@ object Main {
 
     val stream = TwitterUtils.createStream(ssc, twitterAuth = TwitterConfig.getAuthorizationFactoryInstance)
     stream.filter(_.getLang == "es")
-      .map(status => (status.getText,DandelionProvider.extractEntities(status.getText).getOrElse("---NONE---"))).print()
+      .map(status => (status.getText,DandelionProvider.extractEntities(status.getText).toOption)).print()
 
     ssc.start()
     ssc.awaitTermination()
