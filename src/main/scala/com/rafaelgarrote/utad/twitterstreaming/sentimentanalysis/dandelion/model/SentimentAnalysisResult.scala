@@ -1,0 +1,20 @@
+package com.rafaelgarrote.utad.twitterstreaming.sentimentanalysis.dandelion.model
+
+import play.api.libs.json.Json
+import play.api.libs.json.Reads
+import play.api.libs.json.Writes
+
+case class SentimentAnalysisResult(
+                               time: Int,
+                               sentiment: Sentiment,
+                               lang: String,
+                               langConfidence: Float,
+                               timestamp: String
+                             )
+
+object SentimentAnalysisResult {
+
+  implicit val writer: Writes[SentimentAnalysisResult] = Json.writes[SentimentAnalysisResult]
+  implicit val reader: Reads[SentimentAnalysisResult] = Json.reads[SentimentAnalysisResult]
+
+}

@@ -21,6 +21,8 @@ object Main {
     val stream = TwitterUtils.createStream(ssc, twitterAuth = TwitterConfig.getAuthorizationFactoryInstance)
     stream.filter(_.getLang == "es")
       .map(status => (status.getText,DandelionProvider.extractEntities(status.getText).toOption)).print()
+    stream.filter(_.getLang == "en")
+      .map(status => (status.getText,DandelionProvider.extractSentiment(status.getText).toOption)).print()
 
     ssc.start()
     ssc.awaitTermination()
