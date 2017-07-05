@@ -15,6 +15,7 @@ object AppProperties {
   private val twitterOauthConsumerSecretKey = "twitter.oauth.consumerSecret"
   private val twitterOauthAccessTokenKey = "twitter.oauth.accessToken"
   private val twitterOauthAccessTokenSecretKey = "twitter.oauth.accessTokenSecret"
+  private val dandelionTokenKey = "dandelion.token"
 
   def getTwitterDebug: Boolean = Try(config.getBoolean(twitterDebugKey)).getOrElse(twitterDebugDefaultValue)
   def getTwitterOauthConsumerKey: String = Try(config.getString(twitterOauthConsumerKey)).getOrElse("")
@@ -22,4 +23,5 @@ object AppProperties {
   def getTwitterOauthAccessToken: String = Try(config.getString(twitterOauthAccessTokenKey)).getOrElse("")
   def getTwitterOauthAccessTokenSecret: String = Try(config.getString(twitterOauthAccessTokenSecretKey)).getOrElse("")
 
+  def getDandelionToken: String = Try(config.getString(dandelionTokenKey)).getOrElse("")
 }
