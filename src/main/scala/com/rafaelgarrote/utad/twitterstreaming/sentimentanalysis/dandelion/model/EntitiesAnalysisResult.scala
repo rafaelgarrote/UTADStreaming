@@ -10,9 +10,9 @@ case class EntitiesAnalysisResult(
                                    lang: String,
                                    langConfidence: Float,
                                    timestamp: String
-                                 )
+                                 ) extends Serializable
 
-object EntitiesAnalysisResult {
+object EntitiesAnalysisResult extends Serializable {
 
   implicit val writer: Writes[EntitiesAnalysisResult] = Json.writes[EntitiesAnalysisResult]
   implicit val reader: Reads[EntitiesAnalysisResult] = Json.reads[EntitiesAnalysisResult]

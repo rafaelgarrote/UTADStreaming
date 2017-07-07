@@ -4,9 +4,9 @@ import play.api.libs.json.Json
 import play.api.libs.json.Reads
 import play.api.libs.json.Writes
 
-case class Sentiment(`type`: String, score: Float)
+case class Sentiment(`type`: String, score: Float) extends Serializable
 
-object Sentiment {
+object Sentiment extends Serializable {
 
   implicit val writer: Writes[Sentiment] = Json.writes[Sentiment]
   implicit val reader: Reads[Sentiment] = Json.reads[Sentiment]

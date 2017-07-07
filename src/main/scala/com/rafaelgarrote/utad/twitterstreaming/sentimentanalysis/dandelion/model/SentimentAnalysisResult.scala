@@ -10,9 +10,9 @@ case class SentimentAnalysisResult(
                                lang: String,
                                langConfidence: Float,
                                timestamp: String
-                             )
+                             ) extends Serializable
 
-object SentimentAnalysisResult {
+object SentimentAnalysisResult extends Serializable {
 
   implicit val writer: Writes[SentimentAnalysisResult] = Json.writes[SentimentAnalysisResult]
   implicit val reader: Reads[SentimentAnalysisResult] = Json.reads[SentimentAnalysisResult]

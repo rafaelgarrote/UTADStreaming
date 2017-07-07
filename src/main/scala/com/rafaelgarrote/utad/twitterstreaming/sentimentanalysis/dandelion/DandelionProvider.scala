@@ -11,7 +11,7 @@ import play.api.libs.json.Json
 
 import scala.util.Try
 
-object DandelionProvider extends SentimentAnalysisProvider {
+object DandelionProvider extends SentimentAnalysisProvider with Serializable {
 
   private val URL_BASE = "https://api.dandelion.eu/datatxt"
   private val API_VERSION = "v1"

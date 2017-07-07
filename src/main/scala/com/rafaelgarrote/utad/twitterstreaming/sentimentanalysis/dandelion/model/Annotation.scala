@@ -16,9 +16,9 @@ case class Annotation(
                        categories: List[String],
                        types: List[String],
                        lod: Map[String, String]
-                     )
+                     ) extends Serializable
 
-object Annotation {
+object Annotation extends Serializable {
 
   implicit val writer: Writes[Annotation] = Json.writes[Annotation]
   implicit val reader: Reads[Annotation] = Json.reads[Annotation]
