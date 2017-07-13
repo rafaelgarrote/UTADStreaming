@@ -1,5 +1,6 @@
 package com.rafaelgarrote.utad.twitterstreaming.spark
 
+import com.rafaelgarrote.utad.twitterstreaming.conf.AppProperties
 import com.typesafe.config.Config
 import org.apache.spark.SparkConf
 import org.apache.spark.sql.SparkSession
@@ -16,7 +17,9 @@ object SparkContextBuilder {
     (session, new StreamingContext(session.sparkContext, Seconds(seconds)))
   }
 
-  private def getSparkConf: SparkConf = //new SparkConf()
-    new SparkConf().setAppName("Tweet Example").setMaster("local[2]")
-
+  private def getSparkConf: SparkConf = {
+    val conf = new SparkConf().setAppName("Tweet Analysis").setMaster("local[2]")
+    AppProperties.getConfAsMap("neo4j").map(entry => conf.set(entry._1, entry._2))
+    conf
+  }
 }

@@ -36,4 +36,11 @@ object AppProperties {
       "org.elasticsearch.spark.sql.port" -> config.getString("elasticsearch.org.elasticsearch.spark.sql.port"),
        "resource" -> config.getString("elasticsearch.org.elasticsearch.spark.sql.resource")
     )
+
+  def getConfAsMap(path: String): Map[String, String] = {
+    import scala.collection.JavaConverters._
+    val pathConfig = config.getConfig(path)
+    pathConfig.entrySet().asScala
+      .map(entry => entry.getKey -> pathConfig.getString(entry.getKey)).toMap
+  }
 }
