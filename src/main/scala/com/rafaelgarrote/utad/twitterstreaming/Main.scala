@@ -33,10 +33,10 @@ object Main {
     val stream = TwitterUtils.createStream(ssc, twitterAuth = TwitterConfig.getAuthorizationFactoryInstance)
     val filteredTweets: DStream[Status] = stream.filter(_.getLang == "es").cache()
 
-    val statusAnalizedStream = filteredTweets.extractEntitiesAndMentions.cache()
-    statusAnalizedStream.map(_.entities).print()
-    statusAnalizedStream.filterTweetsByEntities.analyzeTweet.enrichTweet.persistElasticsearch
-    statusAnalizedStream.filterTweetsByEntities.crawlRTsAndPersist
+    val statusAnalizedStream = filteredTweets.extractEntitiesAndMentions.filterTweetsByEntities.cache()
+//    statusAnalizedStream.map(_.entities).print()
+    statusAnalizedStream.analyzeTweet.enrichTweet.persistElasticsearch
+    statusAnalizedStream.crawlRTsAndPersist
 
     ssc.start()
     ssc.awaitTermination()
