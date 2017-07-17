@@ -56,7 +56,7 @@ class WriterFunctions(self: DataFrame, session: SparkSession) {
             "tweet_id" -> r.getAs[AnyRef]("tweetId"),
             "sentiment"-> r.getAs[AnyRef]("sentiment")).asJava)
           .asJava).asJava
-//      println(params)
+      println(params)
       execute(config, mergeStatement, Map("rows" -> params).asJava)
     })
   }

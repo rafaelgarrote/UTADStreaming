@@ -18,6 +18,7 @@ object AppProperties {
   private val dandelionTokenKey = "dandelion.token"
   private val elasticsearchDatasourceKey = "elasticsearch.datasource"
   private val elasticsearchResourceKey = "elasticsearch.org.elasticsearch.spark.sql.resource"
+  private val entitiesFileUrlKey = "entities.file.url"
 
   def getTwitterDebug: Boolean = Try(config.getBoolean(twitterDebugKey)).getOrElse(twitterDebugDefaultValue)
   def getTwitterOauthConsumerKey: String = Try(config.getString(twitterOauthConsumerKey)).getOrElse("")
@@ -43,4 +44,7 @@ object AppProperties {
     pathConfig.entrySet().asScala
       .map(entry => entry.getKey -> pathConfig.getString(entry.getKey)).toMap
   }
+
+  def getEntitiesFileUrl: String = Try(config.getString(entitiesFileUrlKey))
+    .getOrElse("src/main/resources/entities.txt")
 }

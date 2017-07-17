@@ -4,7 +4,8 @@ import twitter4j.Status
 
 case class AnalysisResult(
                            status: Status,
-                           sentiment: Option[String],
-                           entities: List[String]
-                         ) extends Serializable
+                           sentiment: Option[String] = None,
+                           entities: List[String] = List.empty[String],
+                           mentions: List[String] = List.empty[String]
+                         )
 
