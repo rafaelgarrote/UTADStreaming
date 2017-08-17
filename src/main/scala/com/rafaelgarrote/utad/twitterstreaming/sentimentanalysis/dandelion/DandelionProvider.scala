@@ -24,6 +24,9 @@ object DandelionProvider extends SentimentAnalysisProvider with Serializable {
   private def extractSentimentUrl(text: String): String = s"$URL_BASE/sent/$API_VERSION/?text=$text&"+
     s"token=$TOKEN"
 
+  private def textClasificationUrl(text: String): String = s"$URL_BASE/cl/$API_VERSION/?text=$text&"+
+    s"model=news_eng&token=$TOKEN"
+
   def extractEntities(text: String): Try[EntitiesAnalysisResult] = {
     val textEncoded = URLEncoder.encode(text)
     HTTPUtils.doGet(extractEntitiesUrl(textEncoded)).map(Json.parse(_).as[EntitiesAnalysisResult])
