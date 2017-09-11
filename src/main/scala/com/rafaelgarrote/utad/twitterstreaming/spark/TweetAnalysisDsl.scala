@@ -4,16 +4,20 @@ import com.rafaelgarrote.utad.twitterstreaming.conf.AppProperties
 import com.rafaelgarrote.utad.twitterstreaming.model.AnalysisResult
 import com.rafaelgarrote.utad.twitterstreaming.model.Author
 import com.rafaelgarrote.utad.twitterstreaming.model.EnrichedTweet
+import com.rafaelgarrote.utad.twitterstreaming.model.Location
 import com.rafaelgarrote.utad.twitterstreaming.model.RTEdge
 import com.rafaelgarrote.utad.twitterstreaming.sentimentanalysis.dandelion.DandelionProvider
 import com.rafaelgarrote.utad.twitterstreaming.sentimentanalysis.standfordnlp.StandfordNlpProvider
 import com.rafaelgarrote.utad.twitterstreaming.utils
+import com.rafaelgarrote.utad.twitterstreaming.utils.GoogleMapsUtils
 import com.rafaelgarrote.utad.twitterstreaming.utils.TwitterUtils
 import org.apache.spark.broadcast.Broadcast
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.streaming.dstream.DStream
 import org.neo4j.spark.Neo4j
 import twitter4j.Status
+
+import scala.util.Try
 
 class StatusAnalysisFunctions(self: DStream[Status])
                        (implicit session: SparkSession) {
@@ -57,9 +61,12 @@ class TweetAnalysisFunctions(self: DStream[AnalysisResult])
         id = status.status.getId,
         author = Author(
           id = status.status.getUser.getId,
-          screenName = Some(status.status.getUser.getScreenName),
+          screenName = Try(status.status.getUser.getScreenName).toOption,
           name = status.status.getUser.getName,
-          location = Some(status.status.getUser.getLocation)
+          locationName = Try(status.status.getUser.getLocation.toString).toOption,
+          location = Try(status.status.getUser.getLocation.toString).toOption
+              .flatMap(l => GoogleMapsUtils.getLatLong(l.split(",").toList)
+              .map(l => Location(l._1, l._2)))
         ),
         text = status.status.getText,
         date = status.status.getCreatedAt.getTime,
